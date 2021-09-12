@@ -6,6 +6,8 @@ local function on_attach()
     -- "Big Tech" "Cash Money" Johnson
 end
 
+require'lspconfig'.hls.setup{ on_attach=on_attach }
+
 require'lspconfig'.tsserver.setup{ on_attach=on_attach }
 
 require'lspconfig'.clangd.setup {
