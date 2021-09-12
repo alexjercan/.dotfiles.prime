@@ -20,19 +20,15 @@ Plug 'ambv/black'
 " Plebvim lsp Plugins
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
-" Plug 'nvim-lua/completion-nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'simrat39/symbols-outline.nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
+Plug 'nvim-lua/lsp-status.nvim'
 
 " Neovim Tree shitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-
-" Debugger Plugins
-" Plug 'puremourning/vimspector'
-" Plug 'szw/vim-maximizer'
 
 " Snippets
 Plug 'L3MON4D3/LuaSnip'
@@ -49,6 +45,7 @@ Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
 Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tpope/vim-projectionist'
+Plug 'kyazdani42/nvim-web-devicons'
 
 " telescope requirements...
 Plug 'nvim-lua/popup.nvim'
@@ -66,22 +63,11 @@ Plug 'mhinz/vim-rfc'
 " prettier
 Plug 'sbdchd/neoformat'
 
-" should I try another status bar???
-"  Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
-" Plug 'hoob3rt/lualine.nvim'
-
 Plug 'ThePrimeagen/git-worktree.nvim'
 Plug 'ThePrimeagen/harpoon'
+Plug 'ThePrimeagen/refactoring.nvim'
 
 call plug#end()
-
-" Adding local modules
-" let &runtimepath.=',' . expand("$HOME") . '/personal/harpoon/master'
-" let &runtimepath.=',' . expand("$HOME") . '/personal/vim-with-me/ui'
-" let &runtimepath.=',' . expand("$HOME") . '/personal/git-worktree.nvim/master'
-" let &runtimepath.=',' . expand("$HOME") . '/personal/refactoring.nvim/get-locals-2'
-
-" let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB' ]
 
 lua require("theprimeagen")
 lua require'nvim-treesitter.configs'.setup { indent = { enable = true }, highlight = { enable = true }, incremental_selection = { enable = true }, textobjects = { enable = true }}
@@ -94,60 +80,7 @@ endif
 
 let loaded_matchparen = 1
 let mapleader = " "
-
-imap <silent><expr> <Tab> luasnip#expand_or_jumpable() ? '<Plug>luasnip-expand-or-jump' : '<Tab>'
-inoremap <silent> <S-Tab> <cmd>lua require'luasnip'.jump(-1)<Cr>
-
-snoremap <silent> <Tab> <cmd>lua require('luasnip').jump(1)<Cr>
-snoremap <silent> <S-Tab> <cmd>lua require('luasnip').jump(-1)<Cr>
-
-imap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
-smap <silent><expr> <C-E> luasnip#choice_active() ? '<Plug>luasnip-next-choice' : '<C-E>'
-
-nnoremap <silent> Q <nop>
-nnoremap <silent> <C-m> :silent !tmux neww bash -c "tmux-cht.sh"<CR>
-inoremap <silent> <C-m> :silent !tmux neww bash -c "tmux-cht.sh"<CR>
-nnoremap <silent> <C-f> :silent lua require("harpoon.term").sendCommand(1, "tmux-sessionizer\n"); require("harpoon.term").gotoTerminal(1)<CR>
-nnoremap <leader>vwh :h <C-R>=expand("<cword>")<CR><CR>
-nnoremap <leader>bs /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
-nnoremap <leader>u :UndotreeShow<CR>
-nnoremap <leader>pv :Ex<CR>
-nnoremap <Leader><CR> :so ~/.config/nvim/init.vim<CR>
-nnoremap <Leader>+ :vertical resize +5<CR>
-nnoremap <Leader>- :vertical resize -5<CR>
-nnoremap <Leader>rp :resize 100<CR>
-nnoremap <Leader>ee oif err != nil {<CR>log.Fatalf("%+v\n", err)<CR>}<CR><esc>kkI<esc>
-nnoremap <Leader>cpu a%" PRIu64 "<esc>
-nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
-nnoremap <leader>gt <Plug>PlenaryTestFile
-nnoremap <leader>vwm :lua require("vim-with-me").init()<CR>
-nnoremap <leader>dwm :lua require("vim-with-me").disconnect()<CR>
-nnoremap <leader>gll :let g:_search_term = expand("%")<CR><bar>:Gclog -- %<CR>:call search(g:_search_term)<CR>
-nnoremap <leader>gln :cnext<CR>:call search(_search_term)<CR>
-nnoremap <leader>glp :cprev<CR>:call search(_search_term)<CR>
-
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
-
-" greatest remap ever
-xnoremap <leader>p "_dP
-
-" next greatest remap ever : asbjornHaland
-nnoremap <leader>y "+y
-vnoremap <leader>y "+y
-nnoremap <leader>Y gg"+yG
-
-nnoremap <leader>d "_d
-vnoremap <leader>d "_d
-
-" vim TODO
-nmap <Leader>tu <Plug>BujoChecknormal
-nmap <Leader>th <Plug>BujoAddnormal
 let g:bujo#todo_file_path = $HOME . "/.cache/bujo"
-
-nnoremap <Leader>ww ofunction wait(ms: number): Promise<void> {<CR>return new Promise(res => setTimeout(res, ms));<CR>}<esc>k=i{<CR>
-
-inoremap <C-c> <esc>
 
 fun! EmptyRegisters()
     let regs=split('abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-"', '\zs')
@@ -158,10 +91,6 @@ endfun
 
 " ES
 com! W w
-
-nmap <leader>nn :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
-\ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
-\ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
 augroup highlight_yank
     autocmd!

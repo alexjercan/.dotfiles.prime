@@ -59,8 +59,7 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export VIM="nvim"
-export GIT_EDITOR=$VIM
+export GIT_EDITOR=nvim
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -87,7 +86,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-alias vim="$VIM"
+alias vim="nvim"
 
 source $HOME/.zsh_profile
 export N_PREFIX="$HOME/n"; [[ :$PATH: == *":$N_PREFIX/bin:"* ]] || PATH+=":$N_PREFIX/bin"  # Added by n-install (see http://git.io/n-install-repo).
