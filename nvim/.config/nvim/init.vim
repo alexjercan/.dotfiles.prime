@@ -23,16 +23,16 @@ Plug 'hrsh7th/nvim-compe'
 " Plug 'nvim-lua/completion-nvim'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'simrat39/symbols-outline.nvim'
-" Plug 'tjdevries/nlua.nvim'
-" Plug 'tjdevries/lsp_extensions.nvim'
+Plug 'tjdevries/nlua.nvim'
+Plug 'tjdevries/lsp_extensions.nvim'
 
 " Neovim Tree shitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
 " Debugger Plugins
-Plug 'puremourning/vimspector'
-Plug 'szw/vim-maximizer'
+" Plug 'puremourning/vimspector'
+" Plug 'szw/vim-maximizer'
 
 " Snippets
 Plug 'L3MON4D3/LuaSnip'
@@ -47,6 +47,7 @@ Plug 'mbbill/undotree'
 Plug 'tpope/vim-dispatch'
 Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
+Plug 'dracula/vim', { 'as': 'dracula' }
 Plug 'tpope/vim-projectionist'
 
 " telescope requirements...
@@ -69,13 +70,16 @@ Plug 'sbdchd/neoformat'
 "  Plug 'glepnir/galaxyline.nvim' , {'branch': 'main'}
 " Plug 'hoob3rt/lualine.nvim'
 
+Plug 'ThePrimeagen/git-worktree.nvim'
+Plug 'ThePrimeagen/harpoon'
+
 call plug#end()
 
 " Adding local modules
-let &runtimepath.=',' . expand("$HOME") . '/personal/harpoon/master'
-let &runtimepath.=',' . expand("$HOME") . '/personal/vim-with-me/ui'
-let &runtimepath.=',' . expand("$HOME") . '/personal/git-worktree.nvim/master'
-let &runtimepath.=',' . expand("$HOME") . '/personal/refactoring.nvim/get-locals-2'
+" let &runtimepath.=',' . expand("$HOME") . '/personal/harpoon/master'
+" let &runtimepath.=',' . expand("$HOME") . '/personal/vim-with-me/ui'
+" let &runtimepath.=',' . expand("$HOME") . '/personal/git-worktree.nvim/master'
+" let &runtimepath.=',' . expand("$HOME") . '/personal/refactoring.nvim/get-locals-2'
 
 " let g:vimspector_install_gadgets = [ 'debugpy', 'vscode-cpptools', 'CodeLLDB' ]
 
