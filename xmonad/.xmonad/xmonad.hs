@@ -242,6 +242,8 @@ myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
             [ className =? "Steam" --> doShift ( myWorkspaces !! 8 )
             , className =? "Steam" --> doFloat
+            , className =? "Discord" --> doShift ( myWorkspaces !! 7 )
+            , className =? "Discord" --> doFloat
             , className =? "Gimp" --> doShift ( myWorkspaces !! 3 )
             , className =? "Gimp" --> doFloat
             ]
