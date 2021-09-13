@@ -66,6 +66,7 @@ import           XMonad.Prompt.XMonad
 import           XMonad.Util.EZConfig                (additionalKeysP)
 import           XMonad.Util.Run                     (spawnPipe)
 import           XMonad.Util.SpawnOnce
+import           XMonad.Util.Cursor
 import           XMonad.Wallpaper
 
 myShell :: String
@@ -98,11 +99,11 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
           spawnOnce "nitrogen --restore &"
-          spawnOnce "xsetroot -cursor_name yaru"
           spawnOnce "picom &"
           spawnOnce "nm-applet &"
           spawnOnce "volumeicon &"
           spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
+          setDefaultCursor xC_left_ptr
 
 myXPConfig :: XPConfig
 myXPConfig = def
