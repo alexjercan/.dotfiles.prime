@@ -19,6 +19,7 @@ import qualified Data.Map                            as M
 import           Data.Monoid
 
     -- Hooks
+import           XMonad.Config.Desktop
 import           XMonad.Hooks.DynamicLog             (PP (..), dynamicLogWithPP,
                                                       shorten, wrap,
                                                       xmobarColor, xmobarPP)
@@ -310,7 +311,7 @@ main :: IO ()
 main = do
     setRandomWallpaper ["$HOME/Pictures/Wallpapers"]
     xmproc0 <- spawnPipe "xmobar -x 0 /home/alex/.config/xmobar/xmobarrc0"
-    xmonad $ def
+    xmonad $ ewmh desktopConfig
         { manageHook = (isFullscreen --> doFullFloat) <+>  myManageHook <+> manageDocks
         , handleEventHook    = fullscreenEventHook
                                <+> serverModeEventHookCmd
