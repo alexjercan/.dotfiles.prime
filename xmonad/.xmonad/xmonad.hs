@@ -237,8 +237,9 @@ myWorkspaces = map (clickable . xmobarEscape) ["1", "2", "3", "4", "5", "6", "7"
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-            [ className =? "Rider" --> doFloat
-            , className =? "Gimp" --> doShift ( myWorkspaces !! 8 )
+            [ className =? "Steam" --> doShift ( myWorkspaces !! 2 )
+            , className =? "Steam" --> doFloat
+            , className =? "Gimp" --> doShift ( myWorkspaces !! 3 )
             , className =? "Gimp" --> doFloat
             ]
 
