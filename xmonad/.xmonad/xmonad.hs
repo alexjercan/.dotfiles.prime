@@ -98,6 +98,7 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 myStartupHook :: X ()
 myStartupHook = do
           spawnOnce "nitrogen --restore &"
+          spawnOnce "xsetroot -cursor_name yaru"
           spawnOnce "picom &"
           spawnOnce "nm-applet &"
           spawnOnce "volumeicon &"
@@ -238,7 +239,7 @@ myWorkspaces = map (clickable . xmobarEscape) ["1", "2", "3", "4", "5", "6", "7"
 
 myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
-            [ className =? "Steam" --> doShift ( myWorkspaces !! 2 )
+            [ className =? "Steam" --> doShift ( myWorkspaces !! 8 )
             , className =? "Steam" --> doFloat
             , className =? "Gimp" --> doShift ( myWorkspaces !! 3 )
             , className =? "Gimp" --> doFloat
@@ -301,6 +302,13 @@ myKeys =
     -- Workspaces
         , ("M-S-<KP_Add>", shiftTo Next nonNSP >> moveTo Next nonNSP)       -- Shifts focused window to next ws
         , ("M-S-<KP_Subtract>", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
+
+    -- Fn
+        , ("<XF86AudioLowerVolume>", spawn "amixer set Master 2%- unmute")
+        , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 2%+ unmute")
+        , ("<XF86AudioMute>", spawn "amixer set Master toggle")
+        , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
+        , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
         ]
         ++ [("M-s " ++ k, S.promptSearch myXPConfig' f) | (k,f) <- searchList ]
         ++ [("M-S-s " ++ k, S.selectSearch f) | (k,f) <- searchList ]
