@@ -141,7 +141,7 @@ nmap <leader>gh :diffget //3<CR>
 nmap <leader>gu :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
-nnoremap <C-a> :lua require("harpoon.mark").add_file()<CR>
+nnoremap <C-m> :lua require("harpoon.mark").add_file()<CR>
 nnoremap <C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
 nnoremap <C-h> :lua require("harpoon.ui").nav_file(1)<CR>
 nnoremap <C-j> :lua require("harpoon.ui").nav_file(2)<CR>

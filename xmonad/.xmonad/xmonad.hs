@@ -336,9 +336,9 @@ myKeys =
         , ("M-S-<KP_Subtract>", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
 
     -- Fn
-        , ("<XF86AudioLowerVolume>", spawn "amixer set Master 2%- unmute")
-        , ("<XF86AudioRaiseVolume>", spawn "amixer set Master 2%+ unmute")
-        , ("<XF86AudioMute>", spawn "amixer set Master toggle")
+        , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
+        , ("<XF86AudioLowerVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ -2% && pactl set-sink-mute @DEFAULT_SINK@ false")
+        , ("<XF86AudioRaiseVolume>", spawn "pactl set-sink-volume @DEFAULT_SINK@ +2% && pactl set-sink-mute @DEFAULT_SINK@ false")
         , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
         , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
         ]
