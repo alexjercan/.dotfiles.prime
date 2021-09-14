@@ -69,6 +69,12 @@ import           XMonad.Util.SpawnOnce
 import           XMonad.Util.Cursor
 import           XMonad.Wallpaper
 
+myBrowser :: String
+myBrowser = "firefox"
+
+myFileExplorer :: String
+myFileExplorer = "nautilus"
+
 myShell :: String
 myShell = "zsh"
 
@@ -84,11 +90,36 @@ myTerminal = "gnome-terminal"   -- Sets default terminal
 myBorderWidth :: Dimension
 myBorderWidth = 2         -- Sets border width for windows
 
+myNormalBlack = "#000000"
+myNormalRed = "#ff5555"
+myNormalGreen = "#50fa7b"
+myNormalYellow = "#f1fa8c"
+myNormalBlue = "#bd93f9"
+myNormalMagenta = "#ff79c6"
+myNormalCyan = "#8be9fd"
+myNormalWhite = "#bfbfbf"
+myBrightBlack = "#4d4d4d"
+myBrightRed = "#ff6e67"
+myBrightGreen = "#5af78e"
+myBrightYellow = "#f4f99d"
+myBrightBlue = "#caa9fa"
+myBrightMagenta = "#ff92d0"
+myBrightCyan = "#9aedfe"
+myBrightWhite = "#e6e6e6"
+myDimBlack = "#14151b"
+myDimRed = "#ff2222"
+myDimGreen = "#1ef956"
+myDimYellow = "#ebf85b"
+myDimBlue = "#4d5b86"
+myDimMagenta = "#ff46b0"
+myDimCyan = "#59dffc"
+myDimWhite = "#e6e6d1"
+
 myNormColor :: String
-myNormColor   = "#282c34" -- Border color of normal windows
+myNormColor = myDimBlack -- Border color of normal windows
 
 myFocusColor :: String
-myFocusColor  = "#bbc5ff" -- Border color of focused windows
+myFocusColor  = myBrightBlack -- Border color of focused windows
 
 altMask :: KeyMask
 altMask = mod1Mask        -- Setting this for use in xprompts
@@ -98,21 +129,17 @@ windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace
 
 myStartupHook :: X ()
 myStartupHook = do
-          spawnOnce "nitrogen --restore &"
           spawnOnce "picom &"
-          spawnOnce "nm-applet &"
-          spawnOnce "volumeicon &"
-          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
           setDefaultCursor xC_left_ptr
 
 myXPConfig :: XPConfig
 myXPConfig = def
       { font                = myFont
-      , bgColor             = "#282c34"
-      , fgColor             = "#bbc2cf"
-      , bgHLight            = "#c792ea"
-      , fgHLight            = "#000000"
-      , borderColor         = "#535974"
+      , bgColor             = myDimBlack
+      , fgColor             = myDimWhite
+      , bgHLight            = myBrightBlue
+      , fgHLight            = myDimBlack
+      , borderColor         = myDimBlack
       , promptBorderWidth   = 0
       , promptKeymap        = myXPKeymap
       , position            = Top
@@ -259,8 +286,10 @@ myKeys =
         , ("M-S-r", spawn "xmonad --restart")        -- Restarts xmonad
         , ("M-S-q", io exitSuccess)                  -- Quits xmonad
 
-    -- Open my preferred terminal
+    -- Open applications
         , ("M-<Return>", spawn (myTerminal ++ " -e " ++ myShell))
+        , ("M-b", spawn myBrowser)
+        , ("M-e", spawn myFileExplorer)
 
     -- Run Prompt
         , ("M-S-<Return>", shellPrompt myXPConfig)   -- Shell Prompt
@@ -339,10 +368,10 @@ main = do
         , focusedBorderColor = myFocusColor
         , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
                         { ppOutput = hPutStrLn xmproc0
-                        , ppCurrent = xmobarColor "#98be65" "" . wrap "[" "]" -- Current workspace in xmobar
-                        , ppHidden = xmobarColor "#82AAFF" "" . wrap "*" ""
-                        , ppHiddenNoWindows = xmobarColor "#c792ea" ""        -- Hidden workspaces (no windows)
-                        , ppTitle = xmobarColor "#b3afc2" "" . shorten 60     -- Title of active window in xmobar
+                        , ppCurrent = xmobarColor myBrightCyan "" . wrap "[" "]" -- Current workspace in xmobar
+                        , ppHidden = xmobarColor myDimCyan "" . wrap "*" ""
+                        , ppHiddenNoWindows = xmobarColor myDimWhite ""        -- Hidden workspaces (no windows)
+                        , ppTitle = xmobarColor myDimWhite "" . shorten 60     -- Title of active window in xmobar
                         , ppExtras  = [windowCount]                           -- # of windows current workspace
                         , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
                         }

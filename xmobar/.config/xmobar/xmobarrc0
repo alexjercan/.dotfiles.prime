@@ -3,54 +3,115 @@ Config
     , additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
                            , "xft:FontAwesome:pixelsize=13"
                            ]
-    , bgColor = "#282c34"
-    , fgColor = "#ff6c6b"
+    , bgColor = "#282a2e"
+    , fgColor = "#e6e6d1"
+    , alpha = 0
     , position = TopSize C 100 24
+    , border = NoBorder
     , lowerOnStart = True
     , hideOnStart = False
     , allDesktops = True
     , persistent = True
-    , iconRoot = ".config/xmobar/xpm"
+    , iconRoot = ".config/xmobar/icons"
     , commands =
-        [ Run Date "<action=`gnome-calendar`><fc=#46d9ff>%b %d %Y - (%H:%M)</fc></action>" "date" 50
-        , Run Network "wlp3s0" ["-t", "<fc=#98be65><icon=net_up_20.xpm/> <rx>kb  <icon=net_down_20.xpm/> <tx>kb</fc>"] 20
-        , Run Cpu ["-t", "<fc=#ecbe7b>cpu: (<total>%)</fc>","-H","50","--high","red"] 20
-        , Run Memory ["-t", "<fc=#ff6c6b>mem: <used>M (<usedratio>%)</fc>"] 20
-        , Run DiskU [("/", "<fc=#51afef>sdd: <free> free</fc>")] [] 60
+        [ Run UnsafeStdinReader
+        , Run Battery
+             [ "--template"  , "<leftipat> <acstatus>"
+             , "--Low"       , "36"      -- units: %
+             , "--High"      , "71"      -- units: %
+             , "--low"       , "#a54242"
+             , "--normal"    , "#de935f"
+             , "--high"      , "#b5bd68"
+             , "--maxtwidth" , "10"
+             , "--"
+             , "--on-icon-pattern"   , "<icon=battery/on/battery_on_%%.xpm/>"
+             , "--off-icon-pattern"  , "<icon=battery/off/battery_off_%%.xpm/>"
+             , "--idle-icon-pattern" , "<icon=battery/idle/battery_idle_%%.xpm/>"
+             , "-o" , "<left><fc=#c5c8c6>%</fc> <timeleft>" -- discharging status
+             , "-O" , "<left><fc=#c5c8c6>% <timeleft></fc>" -- plugged in status
+             , "-i" , "<fc=#707880>IDLE</fc>"               -- charged status
+             ] 50
+        , Run Cpu
+             [ "--template" , "<ipat><total>%"
+             , "--Low"      , "55"      -- units: %
+             , "--High"     , "77"      -- units: %
+             , "--low"      , "#b5bd68"
+             , "--normal"   , "#de935f"
+             , "--high"     , "#a54242"
+             , "--ppad"              , "3"
+             , "--width"             , "3"
+             , "--maxtwidth"         , "4"
+             , "--"
+             , "--load-icon-pattern" , "<icon=cpu/cpu_%%.xpm/>"
+             ] 10
+        , Run Memory
+             [ "--template" , "<usedipat><usedratio>%"
+             , "--Low"      , "55"      -- units: %
+             , "--High"     , "77"      -- units: %
+             , "--low"      , "#b5bd68"
+             , "--normal"   , "#de935f"
+             , "--high"     , "#a54242"
+             , "--ppad"      , "3"
+             , "--width"     , "3"
+             , "--maxtwidth" , "4"
+             , "--"
+             , "--used-icon-pattern" , "<icon=ram/ram_%%.xpm/>"
+             ] 10
+        , Run DynNetwork
+             [ "--template" , "<txipat><rxipat>"
+             , "--Low"      , "10000"   -- units: B/s
+             , "--High"     , "100000"  -- units: B/s
+             , "--low"      , "#b5bd68"
+             , "--normal"   , "#de935f"
+             , "--high"     , "#a54242"
+             , "--maxtwidth" , "0"
+             , "--"
+             , "--rx-icon-pattern" , "<icon=network/rx/network_rx_%%.xpm/>"
+             , "--tx-icon-pattern" , "<icon=network/tx/network_tx_%%.xpm/>"
+             ] 10
         , Run WeatherX "LROP"
-             [ ("clear", "\xf137")
-             , ("sunny", "\xf137")
-             , ("mostly clear", "\xf137")
-             , ("mostly sunny", "\xf137")
-             , ("partly sunny", "\xf137")
-             , ("fair", "\xf137")
-             , ("cloudy","\xf137")
-             , ("overcast","\xf137")
-             , ("partly cloudy", "\xf137")
-             , ("mostly cloudy", "\xf137")
-             , ("considerable cloudiness", "\xf137")]
-             ["-t", "<action=`gnome-weather`><fc=#d8bfd8> <station> <fn=2><skyConditionS></fn> <tempC>°</fc></action>"
-             , "-L","10", "-H", "25", "--normal", "black"
-             , "--high", "lightgoldenrod4", "--low", "darkseagreen4"]
-             36000
-        , Run BatteryP ["BAT0"]
-             ["-t", "<acstatus>"
-             , "-L", "10", "-H", "80"
-             , "-l", "#ff6c6b", "-h", "#98be65"
-             , "--", "-O", "Charging (<left>%)", "-o", "Battery: <left>%", "-i", "Battery Full"
-             , "-a", "notify-send -u critical 'Battery running out!!'"
-             , "-A", "5" ]
-             10
+             [ (""                        , "<fc=#5e8d87>?</fc>")
+             , ("clear"                   , "<icon=weather/weather_sunny.xpm/>")
+             , ("mostly clear"            , "<icon=weather/weather_mostly_sunny.xpm/>")
+             , ("sunny"                   , "<icon=weather/weather_sunny.xpm/>")
+             , ("mostly sunny"            , "<icon=weather/weather_mostly_sunny.xpm/>")
+             , ("partly sunny"            , "<icon=weather/weather_mostly_cloudy.xpm/>")
+             , ("cloudy"                  , "<icon=weather/weather_cloudy.xpm/>")
+             , ("mostly cloudy"           , "<icon=weather/weather_mostly_cloudy.xpm/>")
+             , ("partly cloudy"           , "<icon=weather/weather_mostly_sunny.xpm/>")
+             , ("fair"                    , "<icon=weather/weather_sunny.xpm/>")
+             , ("overcast"                , "<icon=weather/weather_cloudy.xpm/>")
+             , ("considerable cloudiness" , "<icon=weather/weather_cloudy.xpm/>")
+             , ("obscured"                , "<icon=weather/weather_obscured.xpm/>")
+             ] [ "--template", "<skyConditionS><tempC>°C"
+             , "--Low"      , "10"      -- units: %
+             , "--High"     , "30"      -- units: %
+             , "--low"      , "#81a2be"
+             , "--normal"   , "#b5bd68"
+             , "--high"     , "#de935f"
+             , "--ppad"      , "3"
+             , "--width"     , "3"
+             , "--maxtwidth" , "18"
+             ] 36000
+        , Run Date "<action=`gnome-calendar`>%b %d %Y - (%H:%M)</action>" "date" 50
+       --, Run MPD [ "--template" , "<statei>"
+             --, "--maxtwidth" , "0"
+             --, "--"
+             --, "--host" , "127.0.0.1"
+             --, "-P" , "<icon=music/music_playing.xpm/>" -- playing
+             --, "-Z" , "<icon=music/music_paused.xpm/>"  -- paused
+             --, "-S" , "<icon=music/music_stopped.xpm/>" -- stopped
+             --] 10
+        --, Run Mail [ ("<fc=#a54242>G</fc>" , "~/.mail/gmail/INBOX") ] "mail"
 
         , Run Com "echo" ["<icon=haskell_20.xpm/>"] "haskell" 0
-        , Run Com "echo" ["<fc=#666666>|</fc>"] "pipe" 0
-        , Run Com ".config/xmobar/uname-color.sh" ["-r"] "uname" 0
+        , Run Com "echo" ["<icon=seperators/seperator.xpm/>"] "pipe" 0
+        , Run Com "uname" ["-r"] "uname" 0
         , Run Com ".config/xmobar/trayer-padding-icon.sh" [] "trayerpad" 10
-        , Run UnsafeStdinReader
         ]
     -- layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% }{ %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %disku% %pipe% %wlp3s0% %pipe% %date% %pipe% %LROP% %pipe% %battery% %pipe% %trayerpad%"
+    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %trayerpad%"
   }
 
