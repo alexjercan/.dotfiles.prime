@@ -120,6 +120,6 @@ Config
     -- layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %pipe% %alsa:default:Master% %trayerpad%"
+    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %pipe% %alsa:default:Master% %pipe% %trayerpad%"
   }
 

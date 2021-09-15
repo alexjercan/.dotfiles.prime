@@ -131,6 +131,8 @@ myStartupHook :: X ()
 myStartupHook = do
           spawnOnce "picom &"
           setDefaultCursor xC_left_ptr
+          spawnOnce "nm-applet &"
+          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 0 --tint 0x282c34  --height 22 &"
 
 myXPConfig :: XPConfig
 myXPConfig = def
@@ -147,7 +149,7 @@ myXPConfig = def
       , historySize         = 256
       , historyFilter       = id
       , defaultText         = []
-      , autoComplete        = Just 1000
+      , autoComplete        = Nothing -- Just 1000 doesen't seem to work
       , showCompletionOnTab = False
       , searchPredicate     = fuzzyMatch
       , alwaysHighlight     = True
@@ -269,8 +271,10 @@ myManageHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManageHook = composeAll
             [ className =? "Steam" --> doShift ( myWorkspaces !! 8 )
             , className =? "Steam" --> doFloat
-            , className =? "Discord" --> doShift ( myWorkspaces !! 7 )
-            , className =? "Discord" --> doFloat
+            , className =? "discord" --> doShift ( myWorkspaces !! 7 )
+            , className =? "discord" --> doFloat
+            , className =? "Microsoft Teams - Preview" --> doShift ( myWorkspaces !! 6 )
+            , className =? "Microsoft Teams - Preview" --> doFloat
             , className =? "Gimp" --> doShift ( myWorkspaces !! 3 )
             , className =? "Gimp" --> doFloat
             ]
