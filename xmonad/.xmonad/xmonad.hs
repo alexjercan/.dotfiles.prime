@@ -29,7 +29,9 @@ import           XMonad.Hooks.ManageDocks            (ToggleStruts (..),
                                                       avoidStruts,
                                                       docksEventHook,
                                                       manageDocks)
-import           XMonad.Hooks.ManageHelpers          (doFullFloat, isFullscreen)
+import           XMonad.Hooks.ManageHelpers          (doFullFloat,
+                                                      isFullscreen,
+                                                      doCenterFloat)
 import           XMonad.Hooks.ServerMode
 import           XMonad.Hooks.WorkspaceHistory
 
@@ -79,13 +81,13 @@ myShell :: String
 myShell = "zsh"
 
 myFont :: String
-myFont = "xft:Ubuntu:pixelsize=11"
+myFont = "xft:monospace:pixelsize=11"
 
 myModMask :: KeyMask
 myModMask = mod4Mask       -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "gnome-terminal"   -- Sets default terminal
+myTerminal = "alacritty"   -- Sets default terminal
 
 myBorderWidth :: Dimension
 myBorderWidth = 2         -- Sets border width for windows
@@ -156,12 +158,6 @@ myXPConfig = def
       , maxComplRows        = Nothing      -- set to Just 5 for 5 rows
       }
 
-myXPConfig' :: XPConfig
-myXPConfig' = myXPConfig
-    { autoComplete          = Nothing
-    , showCompletionOnTab   = True
-    }
-
 promptList :: [(String, XPConfig -> X ())]
 promptList = [ ("m", manPrompt)          -- manpages prompt
              , ("s", sshPrompt)          -- ssh prompt
@@ -207,27 +203,15 @@ myXPKeymap = M.fromList $
      , (xK_Escape, quit)
      ]
 
-archwiki, ebay, news, reddit, urban :: S.SearchEngine
-archwiki = S.searchEngine "archwiki" "https://wiki.archlinux.org/index.php?search="
-ebay     = S.searchEngine "ebay" "https://www.ebay.com/sch/i.html?_nkw="
-news     = S.searchEngine "news" "https://news.google.com/search?q="
-reddit   = S.searchEngine "reddit" "https://www.reddit.com/search/?q="
-urban    = S.searchEngine "urban" "https://www.urbandictionary.com/define.php?term="
-
 searchList :: [(String, S.SearchEngine)]
-searchList = [ ("a", archwiki)
-             , ("d", S.duckduckgo)
-             , ("e", ebay)
+searchList = [ ("d", S.duckduckgo)
              , ("g", S.google)
              , ("h", S.hoogle)
              , ("i", S.images)
-             , ("n", news)
-             , ("r", reddit)
              , ("s", S.stackage)
              , ("t", S.thesaurus)
              , ("v", S.vocabulary)
              , ("b", S.wayback)
-             , ("u", urban)
              , ("w", S.wikipedia)
              , ("y", S.youtube)
              , ("z", S.amazon)
@@ -277,6 +261,9 @@ myManageHook = composeAll
             , className =? "Microsoft Teams - Preview" --> doFloat
             , className =? "Gimp" --> doShift ( myWorkspaces !! 3 )
             , className =? "Gimp" --> doFloat
+            , className =? "Pavucontrol" --> doCenterFloat
+            , className =? "Org.gnome.Weather" --> doCenterFloat
+            , className =? "Gnome-calendar" --> doCenterFloat
             ]
 
 myLogHook :: X ()
@@ -314,8 +301,8 @@ myKeys =
         , ("M-S-j", windows W.swapDown)      -- Swap focused window with next window
         , ("M-S-k", windows W.swapUp)        -- Swap focused window with prev window
         , ("M-<Backspace>", promote)         -- Moves focused window to master, others maintain order
-        , ("M1-S-<Tab>", rotSlavesDown)      -- Rotate all windows except master and keep focus in place
-        , ("M1-C-<Tab>", rotAllDown)         -- Rotate all the windows in the current stack
+        , ("M-S-<Tab>", rotSlavesDown)      -- Rotate all windows except master and keep focus in place
+        , ("M-C-<Tab>", rotAllDown)         -- Rotate all the windows in the current stack
         , ("M-C-s", killAllOtherCopies)
 
         -- Layouts
@@ -338,6 +325,8 @@ myKeys =
     -- Workspaces
         , ("M-S-<KP_Add>", shiftTo Next nonNSP >> moveTo Next nonNSP)       -- Shifts focused window to next ws
         , ("M-S-<KP_Subtract>", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
+        , ("M1-<Tab>", moveTo Next nonNSP)
+        , ("M1-S-<Tab>", moveTo Prev nonNSP)
 
     -- Fn
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
@@ -346,9 +335,9 @@ myKeys =
         , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
         , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
         ]
-        ++ [("M-s " ++ k, S.promptSearch myXPConfig' f) | (k,f) <- searchList ]
+        ++ [("M-s " ++ k, S.promptSearch myXPConfig f) | (k,f) <- searchList ]
         ++ [("M-S-s " ++ k, S.selectSearch f) | (k,f) <- searchList ]
-        ++ [("M-S-p " ++ k, f myXPConfig') | (k,f) <- promptList ]
+        ++ [("M-S-p " ++ k, f myXPConfig) | (k,f) <- promptList ]
           where nonNSP = WSIs (return (\ws -> W.tag ws /= "nsp"))
 
 main :: IO ()

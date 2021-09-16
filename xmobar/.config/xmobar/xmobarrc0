@@ -83,7 +83,7 @@ Config
              , ("overcast"                , "<icon=weather/weather_cloudy.xpm/>")
              , ("considerable cloudiness" , "<icon=weather/weather_cloudy.xpm/>")
              , ("obscured"                , "<icon=weather/weather_obscured.xpm/>")
-             ] [ "--template", "<skyConditionS><tempC>°C"
+             ] [ "--template", "<action=`gnome-weather`><skyConditionS><tempC>°C</action>"
              , "--Low"      , "10"      -- units: %
              , "--High"     , "30"      -- units: %
              , "--low"      , "#81a2be"
@@ -95,7 +95,7 @@ Config
              ] 36000
         , Run Date "<action=`gnome-calendar`>%b %d %Y - (%H:%M)</action>" "date" 50
         , Run Alsa "default" "Master"
-                 [ "-t", "<volume>% <status>"
+                 [ "-t", "<action=`pavucontrol`><volume>% <status></action>"
                  , "--"
                  , "--on", "<volumeipat>"
                  , "--off", "<icon=audio/audio_off.xpm/>"
