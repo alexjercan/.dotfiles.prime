@@ -77,6 +77,12 @@ myBrowser = "firefox"
 myFileExplorer :: String
 myFileExplorer = "nautilus"
 
+myWhatsapp :: String
+myWhatsapp = "firefox --new-tab https://web.whatsapp.com/"
+
+myScreenshoter :: String
+myScreenshoter = "scrot -e 'mv $f ~/Pictures/Screenshots/'"
+
 myShell :: String
 myShell = "zsh"
 
@@ -208,7 +214,6 @@ searchList = [ ("d", S.duckduckgo)
              , ("g", S.google)
              , ("h", S.hoogle)
              , ("i", S.images)
-             , ("s", S.stackage)
              , ("t", S.thesaurus)
              , ("v", S.vocabulary)
              , ("b", S.wayback)
@@ -281,6 +286,8 @@ myKeys =
         , ("M-<Return>", spawn (myTerminal ++ " -e " ++ myShell))
         , ("M-b", spawn myBrowser)
         , ("M-e", spawn myFileExplorer)
+        , ("M-w", spawn myWhatsapp)
+        , ("M-S-s", spawn myScreenshoter)
 
     -- Run Prompt
         , ("M-S-<Return>", shellPrompt myXPConfig)   -- Shell Prompt
@@ -335,8 +342,8 @@ myKeys =
         , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
         , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
         ]
-        ++ [("M-s " ++ k, S.promptSearch myXPConfig f) | (k,f) <- searchList ]
-        ++ [("M-S-s " ++ k, S.selectSearch f) | (k,f) <- searchList ]
+        ++ [("M-s " ++ k, S.selectSearch f) | (k,f) <- searchList ]
+        ++ [("M-S-p " ++ k, S.promptSearch myXPConfig f) | (k,f) <- searchList ]
         ++ [("M-S-p " ++ k, f myXPConfig) | (k,f) <- promptList ]
           where nonNSP = WSIs (return (\ws -> W.tag ws /= "nsp"))
 

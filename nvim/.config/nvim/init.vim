@@ -147,8 +147,9 @@ nnoremap <C-h> :lua require("harpoon.ui").nav_file(1)<CR>
 nnoremap <C-j> :lua require("harpoon.ui").nav_file(2)<CR>
 nnoremap <C-k> :lua require("harpoon.ui").nav_file(3)<CR>
 nnoremap <C-l> :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap <C-t> :lua require("harpoon.term").gotoTerminal(1)<CR>
+nnoremap <C-t> :lua require("harpoon.term").gotoTerminal(1)<CR>i
 tnoremap <Esc> <C-\><C-n>
+tnoremap <C-t> <C-\><C-n><C-o>
 
 nnoremap <leader>ld :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>li :lua vim.lsp.buf.implementation()<CR>
@@ -197,6 +198,7 @@ inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 
 nnoremap <silent> Q <nop>
 nnoremap <leader>wh :h <C-R>=expand("<cword>")<CR><CR>
