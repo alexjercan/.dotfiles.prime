@@ -80,6 +80,9 @@ myFileExplorer = "nautilus"
 myWhatsapp :: String
 myWhatsapp = "firefox --new-tab https://web.whatsapp.com/"
 
+myNetflix:: String
+myNetflix = "firefox --new-tab https://www.netflix.com/"
+
 myScreenshoter :: String
 myScreenshoter = "scrot -e 'mv $f ~/Pictures/Screenshots/'"
 
@@ -287,6 +290,7 @@ myKeys =
         , ("M-b", spawn myBrowser)
         , ("M-e", spawn myFileExplorer)
         , ("M-w", spawn myWhatsapp)
+        , ("M-n", spawn myNetflix)
         , ("M-S-s", spawn myScreenshoter)
 
     -- Run Prompt
