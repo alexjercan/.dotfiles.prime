@@ -45,7 +45,7 @@ Plug 'ambv/black'
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/nvim-compe'
 Plug 'glepnir/lspsaga.nvim'
-Plug 'simrat39/symbols-outline.nvim'
+" Plug 'simrat39/symbols-outline.nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
@@ -53,10 +53,8 @@ Plug 'nvim-lua/lsp-status.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
-Plug 'L3MON4D3/LuaSnip'
+" Plug 'L3MON4D3/LuaSnip'
 
-Plug 'rust-lang/rust.vim'
-Plug 'darrikonn/vim-gofmt'
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
 Plug 'vim-utils/vim-man'
@@ -158,6 +156,7 @@ nnoremap <leader>lr :lua vim.lsp.buf.references()<CR>
 nnoremap <leader>ln :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>lh :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>la :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>lc :lua vim.lsp.codelens.run()<CR>
 
 nnoremap <leader>rr :lua require('theprimeagen.telescope').refactors()<CR>
 vnoremap <leader>rr :lua require('theprimeagen.telescope').refactors()<CR>
@@ -217,8 +216,16 @@ augroup highlight_yank
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
 augroup END
 
+augroup AutoRefreshCodeLens
+    autocmd!
+augroup END
+
+augroup refresh_codelens
+    autocmd!
+    autocmd InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+augroup END
+
 augroup THE_PRIMEAGEN
     autocmd!
     autocmd BufWritePre * %s/\s\+$//e
-    autocmd BufEnter,BufWinEnter,TabEnter *.rs :lua require'lsp_extensions'.inlay_hints{}
 augroup END
