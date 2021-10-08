@@ -169,6 +169,11 @@ nnoremap <leader>pb :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>ph :lua require('telescope.builtin').help_tags()<CR>
 nnoremap <leader>vrc :lua require('theprimeagen.telescope').search_dotfiles()<CR>
 
+nnoremap <leader>h :wincmd h<CR>
+nnoremap <leader>j :wincmd j<CR>
+nnoremap <leader>k :wincmd k<CR>
+nnoremap <leader>l :wincmd l<CR>
+
 nnoremap <leader>+ :vertical resize +5<CR>
 nnoremap <leader>- :vertical resize -5<CR>
 nnoremap <leader>= :resize 100<CR>
@@ -222,7 +227,7 @@ augroup END
 
 augroup refresh_codelens
     autocmd!
-    autocmd InsertLeave <buffer> lua vim.lsp.codelens.refresh()
+    autocmd InsertLeave *.hs lua vim.lsp.codelens.refresh()
 augroup END
 
 augroup THE_PRIMEAGEN
