@@ -138,6 +138,9 @@ altMask = mod1Mask        -- Setting this for use in xprompts
 windowCount :: X (Maybe String)
 windowCount = gets $ Just . show . length . W.integrate' . W.stack . W.workspace . W.current . windowset
 
+nonEmptyWS :: WSType
+nonEmptyWS = WSIs (return (\ws -> not (null (W.integrate' $ W.stack ws))))
+
 myStartupHook :: X ()
 myStartupHook = do
           spawnOnce "picom &"
@@ -336,8 +339,8 @@ myKeys =
     -- Workspaces
         , ("M-S-<KP_Add>", shiftTo Next nonNSP >> moveTo Next nonNSP)       -- Shifts focused window to next ws
         , ("M-S-<KP_Subtract>", shiftTo Prev nonNSP >> moveTo Prev nonNSP)  -- Shifts focused window to prev ws
-        , ("M1-<Tab>", moveTo Next nonNSP)
-        , ("M1-S-<Tab>", moveTo Prev nonNSP)
+        , ("M1-<Tab>", moveTo Next nonEmptyWS)
+        , ("M1-S-<Tab>", moveTo Prev nonEmptyWS)
 
     -- Fn
         , ("<XF86AudioMute>", spawn "pactl set-sink-mute @DEFAULT_SINK@ toggle")
