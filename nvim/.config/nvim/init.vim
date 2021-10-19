@@ -28,13 +28,11 @@ set undofile
 set incsearch
 set termguicolors
 set scrolloff=8
-" set noshowmode
 set signcolumn=yes
 set isfname+=@-@
-" set ls=0
 set cmdheight=2
 set updatetime=50
-set completeopt=menuone,noselect
+set completeopt=menu,menuone,noselect
 set shortmess+=c
 set colorcolumn=80
 
@@ -43,17 +41,16 @@ call plug#begin('~/.vim/plugged')
 Plug 'ambv/black'
 
 Plug 'neovim/nvim-lspconfig'
-Plug 'hrsh7th/nvim-compe'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
-" Plug 'simrat39/symbols-outline.nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
-
-" Plug 'L3MON4D3/LuaSnip'
 
 Plug 'tpope/vim-fugitive'
 Plug 'junegunn/gv.vim'
@@ -103,32 +100,6 @@ hi TelescopeBorder guifg=#5eacd
 let g:vim_be_good_log_file = 1
 let g:rg_derive_root='true'
 
-let g:compe = {}
-let g:compe.enabled = v:true
-let g:compe.autocomplete = v:true
-let g:compe.debug = v:false
-let g:compe.min_length = 1
-let g:compe.preselect = 'enable'
-let g:compe.throttle_time = 80
-let g:compe.source_timeout = 200
-let g:compe.resolve_timeout = 800
-let g:compe.incomplete_delay = 400
-let g:compe.max_abbr_width = 100
-let g:compe.max_kind_width = 100
-let g:compe.max_menu_width = 100
-let g:compe.documentation = v:true
-
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:true
-let g:compe.source.ultisnips = v:true
-let g:compe.source.luasnip = v:true
-let g:compe.source.emoji = v:true
-
 let mapleader = " "
 
 nnoremap <leader>ga :Git fetch --all<CR>
@@ -149,14 +120,14 @@ nnoremap <C-t> :lua require("harpoon.term").gotoTerminal(1)<CR>i
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-t> <C-\><C-n><C-o>
 
-nnoremap <leader>ld :lua vim.lsp.buf.definition()<CR>
-nnoremap <leader>li :lua vim.lsp.buf.implementation()<CR>
-nnoremap <leader>ls :lua vim.lsp.buf.signature_help()<CR>
-nnoremap <leader>lr :lua vim.lsp.buf.references()<CR>
-nnoremap <leader>ln :lua vim.lsp.buf.rename()<CR>
-nnoremap <leader>lh :lua vim.lsp.buf.hover()<CR>
-nnoremap <leader>la :lua vim.lsp.buf.code_action()<CR>
-nnoremap <leader>lc :lua vim.lsp.codelens.run()<CR>
+nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
+nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
+nnoremap <leader>vs :lua vim.lsp.buf.signature_help()<CR>
+nnoremap <leader>vr :lua vim.lsp.buf.references()<CR>
+nnoremap <leader>vn :lua vim.lsp.buf.rename()<CR>
+nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
+nnoremap <leader>va :lua vim.lsp.buf.code_action()<CR>
+nnoremap <leader>vc :lua vim.lsp.codelens.run()<CR>
 
 nnoremap <leader>rr :lua require('theprimeagen.telescope').refactors()<CR>
 vnoremap <leader>rr :lua require('theprimeagen.telescope').refactors()<CR>
@@ -199,10 +170,6 @@ inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
 
 nnoremap <silent> Q <nop>
 nnoremap <leader>wh :h <C-R>=expand("<cword>")<CR><CR>
