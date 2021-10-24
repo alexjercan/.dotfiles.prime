@@ -38,36 +38,28 @@ set colorcolumn=80
 
 call plug#begin('~/.vim/plugged')
 
-Plug 'ambv/black'
-
 Plug 'neovim/nvim-lspconfig'
 Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
-Plug 'glepnir/lspsaga.nvim'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 Plug 'nvim-lua/lsp-status.nvim'
+Plug 'ThePrimeagen/refactoring.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
 Plug 'tpope/vim-fugitive'
-Plug 'junegunn/gv.vim'
-Plug 'vim-utils/vim-man'
 Plug 'mbbill/undotree'
-Plug 'tpope/vim-dispatch'
+
 Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
-Plug 'tpope/vim-projectionist'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzy-native.nvim'
-
-Plug 'ThePrimeagen/harpoon'
-Plug 'ThePrimeagen/refactoring.nvim'
 
 call plug#end()
 
@@ -80,14 +72,12 @@ if exists('+termguicolors')
     let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
 endif
 let g:gruvbox_invert_selection='0'
-
 set background=dark
 if has('nvim')
     call luaeval('vim.cmd("colorscheme " .. _A[1])', ["gruvbox"])
 else
     colorscheme gruvbox
 endif
-
 highlight ColorColumn ctermbg=0 guibg=grey
 hi SignColumn guibg=none
 hi CursorLineNR guibg=None
@@ -110,16 +100,6 @@ nmap <leader>gh :diffget //3<CR>
 nmap <leader>gu :diffget //2<CR>
 nmap <leader>gs :G<CR>
 
-nnoremap <C-m> :lua require("harpoon.mark").add_file()<CR>
-nnoremap <C-e> :lua require("harpoon.ui").toggle_quick_menu()<CR>
-nnoremap <C-h> :lua require("harpoon.ui").nav_file(1)<CR>
-nnoremap <C-j> :lua require("harpoon.ui").nav_file(2)<CR>
-nnoremap <C-k> :lua require("harpoon.ui").nav_file(3)<CR>
-nnoremap <C-l> :lua require("harpoon.ui").nav_file(4)<CR>
-nnoremap <C-t> :lua require("harpoon.term").gotoTerminal(1)<CR>i
-tnoremap <Esc> <C-\><C-n>
-tnoremap <C-t> <C-\><C-n><C-o>
-
 nnoremap <leader>vd :lua vim.lsp.buf.definition()<CR>
 nnoremap <leader>vi :lua vim.lsp.buf.implementation()<CR>
 nnoremap <leader>vs :lua vim.lsp.buf.signature_help()<CR>
@@ -128,7 +108,6 @@ nnoremap <leader>vn :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>va :lua vim.lsp.buf.code_action()<CR>
 nnoremap <leader>vc :lua vim.lsp.codelens.run()<CR>
-
 nnoremap <leader>rr :lua require('theprimeagen.telescope').refactors()<CR>
 vnoremap <leader>rr :lua require('theprimeagen.telescope').refactors()<CR>
 
@@ -138,6 +117,7 @@ nnoremap <leader>pe :lua require('telescope.builtin').find_files()<CR>
 nnoremap <leader>pw :lua require('telescope.builtin').grep_string { search = vim.fn.expand("<cword>") }<CR>
 nnoremap <leader>pb :lua require('telescope.builtin').buffers()<CR>
 nnoremap <leader>ph :lua require('telescope.builtin').help_tags()<CR>
+nnoremap <leader>pv :Ex<CR>
 nnoremap <leader>vrc :lua require('theprimeagen.telescope').search_dotfiles()<CR>
 
 nnoremap <leader>h :wincmd h<CR>
@@ -186,10 +166,6 @@ endfun
 augroup highlight_yank
     autocmd!
     autocmd TextYankPost * silent! lua require'vim.highlight'.on_yank({timeout = 40})
-augroup END
-
-augroup AutoRefreshCodeLens
-    autocmd!
 augroup END
 
 augroup refresh_codelens
