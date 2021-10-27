@@ -1,4 +1,5 @@
 local cmp = require'cmp'
+local lsp_status = require('lsp-status')
 
 cmp.setup({
     snippet = {
@@ -17,7 +18,7 @@ cmp.setup({
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
-        ['<C-Space>'] = cmp.mapping.close(),
+        ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm({ select = false }),
     },
 
