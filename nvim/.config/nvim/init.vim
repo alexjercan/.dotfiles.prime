@@ -44,7 +44,6 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
-Plug 'nvim-lua/lsp-status.nvim'
 
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
@@ -64,7 +63,6 @@ Plug 'ThePrimeagen/harpoon'
 call plug#end()
 
 lua require("theprimeagen")
-lua require'nvim-treesitter.configs'.setup { indent = { enable = true }, highlight = { enable = true }, incremental_selection = { enable = true }, textobjects = { enable = true }}
 
 let g:gruvbox_contrast_dark = 'hard'
 if exists('+termguicolors')
