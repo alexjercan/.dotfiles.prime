@@ -57,6 +57,9 @@ Config
              , "--"
              , "--used-icon-pattern" , "<icon=ram/ram_%%.xpm/>"
              ] 10
+        , Run DiskU
+             [("/", "<used>/<size>")]
+             ["-L", "20", "-H", "50", "-m", "1", "-p", "3"] 20
         , Run DynNetwork
              [ "--template" , "<txipat><rxipat>"
              , "--Low"      , "10000"   -- units: B/s
@@ -120,6 +123,6 @@ Config
     -- layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %pipe% %alsa:default:Master% %pipe% %trayerpad%"
+    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %disku% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %pipe% %alsa:default:Master% %pipe% %trayerpad%"
   }
 

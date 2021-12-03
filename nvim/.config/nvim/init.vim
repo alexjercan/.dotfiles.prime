@@ -51,8 +51,11 @@ Plug 'nvim-treesitter/playground'
 Plug 'tpope/vim-fugitive'
 Plug 'mbbill/undotree'
 
+Plug 'tpope/vim-surround'
+
 Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
+Plug 'mhinz/vim-rfc'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -100,7 +103,9 @@ nnoremap <leader>vr :lua vim.lsp.buf.references()<CR>
 nnoremap <leader>vn :lua vim.lsp.buf.rename()<CR>
 nnoremap <leader>vh :lua vim.lsp.buf.hover()<CR>
 nnoremap <leader>va :lua vim.lsp.buf.code_action()<CR>
-nnoremap <leader>vc :lua vim.lsp.codelens.run()<CR>
+nnoremap <leader>vc :lua vim.lsp.codelens.refresh()<CR>:sleep 10m<CR>:lua vim.lsp.codelens.run()<CR>
+nnoremap <leader>ve :lua vim.diagnostic.open_float()<CR>
+nnoremap <leader>lsp :LspRestart<CR>
 
 nnoremap <leader>ps :lua require('telescope.builtin').grep_string({ search = vim.fn.input("Grep For > ")})<CR>
 nnoremap <leader>pg :lua require('telescope.builtin').git_files()<CR>

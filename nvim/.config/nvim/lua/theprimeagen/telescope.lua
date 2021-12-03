@@ -24,6 +24,12 @@ require("telescope").setup({
     },
 })
 
+
+require("harpoon").setup({
+    nav_first_in_list = true,
+})
+
+
 require("telescope").load_extension("fzy_native")
 
 local M = {}
