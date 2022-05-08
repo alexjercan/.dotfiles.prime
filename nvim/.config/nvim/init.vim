@@ -45,6 +45,8 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'tjdevries/nlua.nvim'
 Plug 'tjdevries/lsp_extensions.nvim'
 
+Plug 'github/copilot.vim'
+
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'nvim-treesitter/playground'
 
@@ -55,7 +57,10 @@ Plug 'tpope/vim-surround'
 
 Plug 'theprimeagen/vim-be-good'
 Plug 'gruvbox-community/gruvbox'
+Plug 'neovimhaskell/haskell-vim'
+Plug 'alx741/vim-hindent'
 Plug 'mhinz/vim-rfc'
+" Plug 'kamykn/spelunker.vim'
 
 Plug 'nvim-lua/popup.nvim'
 Plug 'nvim-lua/plenary.nvim'
@@ -86,6 +91,8 @@ hi TelescopeBorder guifg=#5eacd
 
 let g:vim_be_good_log_file = 1
 let g:rg_derive_root='true'
+let g:hindent_on_save = 0
+let g:hindent_indent_size = 4
 
 let mapleader = " "
 
@@ -128,6 +135,7 @@ tnoremap <C-t> <C-\><C-n><C-o>
 nnoremap <leader>+ :vertical resize +5<CR>
 nnoremap <leader>- :vertical resize -5<CR>
 nnoremap <leader>= :resize 100<CR>
+nnoremap <leader>rnu :set rnu!<CR>
 
 nnoremap <C-f> /<C-R>=escape(expand("<cWORD>"), "/")<CR><CR>
 nnoremap <leader>s :%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>
@@ -150,6 +158,10 @@ inoremap <Up>     <C-o>:echom "--> k <-- "<CR>
 inoremap <Down>   <C-o>:echom "--> j <-- "<CR>
 inoremap <Right>  <C-o>:echom "--> l <-- "<CR>
 inoremap <Left>   <C-o>:echom "--> h <-- "<CR>
+nnoremap <Up>     :echom "--> k <-- "<CR>
+nnoremap <Down>   :echom "--> j <-- "<CR>
+nnoremap <Right>  :echom "--> l <-- "<CR>
+nnoremap <Left>   :echom "--> h <-- "<CR>
 
 nnoremap <silent> Q <nop>
 nnoremap <leader>wh :h <C-R>=expand("<cword>")<CR><CR>
@@ -165,3 +177,10 @@ augroup THE_PRIMEAGEN
     autocmd!
     autocmd BufWritePre * %s/\s\+$//e
 augroup END
+
+augroup vimrc_todo
+    au!
+    au Syntax * syn match MyTodo /\v<(FIXME|NOTE|TODO|OPTIMIZE|XXX):/
+          \ containedin=.*Comment,vimCommentTitle
+augroup END
+hi def link MyTodo Todo

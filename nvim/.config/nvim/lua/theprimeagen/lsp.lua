@@ -5,7 +5,7 @@ nvim_ts.setup({
     indent = { enable = true },
     highlight = {
         enable = true,
-        -- disable = { 'haskell' }
+        disable = { 'haskell' }
     },
     incremental_selection = { enable = true },
     textobjects = { enable = true }

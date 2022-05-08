@@ -70,18 +70,19 @@ import           XMonad.Util.Run                     (spawnPipe)
 import           XMonad.Util.SpawnOnce
 import           XMonad.Util.Cursor
 import           XMonad.Wallpaper
+import XMonad.Layout.NoBorders (smartBorders)
 
 myBrowser :: String
-myBrowser = "firefox"
+myBrowser = "brave"
 
 myFileExplorer :: String
 myFileExplorer = "nautilus"
 
 myWhatsapp :: String
-myWhatsapp = "firefox --new-tab https://web.whatsapp.com/"
+myWhatsapp = myBrowser ++ " --new-tab https://web.whatsapp.com/"
 
 myNetflix:: String
-myNetflix = "firefox --new-tab https://www.netflix.com/"
+myNetflix = myBrowser ++ " --new-tab https://www.netflix.com/"
 
 myScreenshoter :: String
 myScreenshoter = "scrot -e 'mv $f ~/Pictures/Screenshots/'"
@@ -143,10 +144,11 @@ nonEmptyWS = WSIs (return (\ws -> not (null (W.integrate' $ W.stack ws))))
 
 myStartupHook :: X ()
 myStartupHook = do
-          spawnOnce "picom &"
+          spawnOnce "picom"
           setDefaultCursor xC_left_ptr
-          spawnOnce "nm-applet &"
-          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 1 --transparent true --alpha 255 --height 22 &"
+          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 255 --height 22"
+          spawnOnce "nm-applet"
+          spawnOnce "blueman-applent"
 
 myXPConfig :: XPConfig
 myXPConfig = def
@@ -159,7 +161,7 @@ myXPConfig = def
       , promptBorderWidth   = 0
       , promptKeymap        = myXPKeymap
       , position            = Top
-      , height              = 24
+      , height              = 28
       , historySize         = 256
       , historyFilter       = id
       , defaultText         = []
@@ -246,7 +248,7 @@ floats   = renamed [Replace "floats"]
 myLayoutHook = avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats $
                mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
              where
-                 myDefaultLayout = grid ||| tall ||| floats
+                 myDefaultLayout = grid ||| tall ||| floats ||| smartBorders Full
 
 xmobarEscape :: String -> String
 xmobarEscape = concatMap doubleLts
@@ -269,7 +271,6 @@ myManageHook = composeAll
             , className =? "discord" --> doShift ( myWorkspaces !! 7 )
             , className =? "discord" --> doFloat
             , className =? "Microsoft Teams - Preview" --> doShift ( myWorkspaces !! 6 )
-            , className =? "Microsoft Teams - Preview" --> doFloat
             , className =? "Gimp" --> doShift ( myWorkspaces !! 3 )
             , className =? "Gimp" --> doFloat
             , className =? "Pavucontrol" --> doCenterFloat
@@ -291,9 +292,7 @@ myKeys =
     -- Open applications
         , ("M-<Return>", spawn (myTerminal ++ " -e " ++ myShell))
         , ("M-b", spawn myBrowser)
-        , ("M-e", spawn myFileExplorer)
-        , ("M-w", spawn myWhatsapp)
-        , ("M-n", spawn myNetflix)
+        , ("M-n", spawn myFileExplorer)
         , ("M-S-s", spawn myScreenshoter)
 
     -- Run Prompt
@@ -349,8 +348,8 @@ myKeys =
         , ("<XF86MonBrightnessUp>", spawn "lux -a 10%")
         , ("<XF86MonBrightnessDown>", spawn "lux -s 10%")
         ]
-        ++ [("M-s " ++ k, S.selectSearch f) | (k,f) <- searchList ]
-        ++ [("M-S-p " ++ k, S.promptSearch myXPConfig f) | (k,f) <- searchList ]
+        ++ [("M-s " ++ k, S.selectSearchBrowser myBrowser f) | (k,f) <- searchList ]
+        ++ [("M-S-p " ++ k, S.promptSearchBrowser myXPConfig myBrowser f) | (k,f) <- searchList ]
         ++ [("M-S-p " ++ k, f myXPConfig) | (k,f) <- promptList ]
           where nonNSP = WSIs (return (\ws -> W.tag ws /= "nsp"))
 
@@ -358,6 +357,7 @@ main :: IO ()
 main = do
     setRandomWallpaper ["$HOME/Pictures/Wallpapers"]
     xmproc0 <- spawnPipe "xmobar -x 0 /home/alex/.config/xmobar/xmobarrc0"
+    xmproc1 <- spawnPipe "xmobar -x 1 /home/alex/.config/xmobar/xmobarrc0"
     xmonad $ ewmh desktopConfig
         { manageHook = (isFullscreen --> doFullFloat) <+>  myManageHook <+> manageDocks
         , handleEventHook    = fullscreenEventHook
@@ -374,7 +374,7 @@ main = do
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
         , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-                        { ppOutput = hPutStrLn xmproc0
+                        { ppOutput = \x -> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
                         , ppCurrent = xmobarColor myBrightCyan "" . wrap "[" "]" -- Current workspace in xmobar
                         , ppHidden = xmobarColor myDimCyan "" . wrap "*" ""
                         , ppHiddenNoWindows = xmobarColor myDimWhite ""        -- Hidden workspaces (no windows)
