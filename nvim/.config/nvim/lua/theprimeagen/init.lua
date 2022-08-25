@@ -1,17 +1,26 @@
-require("theprimeagen.telescope")
-require("theprimeagen.lsp")
+require("theprimeagen.set")
+require("theprimeagen.packer")
+require("theprimeagen.neogit")
 
-P = function(v)
-  print(vim.inspect(v))
-  return v
-end
+local augroup = vim.api.nvim_create_augroup
+local ThePrimeagenGroup = augroup('ThePrimeagen', {})
 
-if pcall(require, 'plenary') then
-  RELOAD = require('plenary.reload').reload_module
+local autocmd = vim.api.nvim_create_autocmd
+local yank_group = augroup('HighlightYank', {})
 
-  R = function(name)
-    RELOAD(name)
-    return require(name)
-  end
-end
+autocmd('TextYankPost', {
+    group = yank_group,
+    pattern = '*',
+    callback = function()
+        vim.highlight.on_yank({
+            higroup = 'IncSearch',
+            timeout = 40,
+        })
+    end,
+})
 
+autocmd({"BufWritePre"}, {
+    group = ThePrimeagenGroup,
+    pattern = "*",
+    command = "%s/\\s\\+$//e",
+})
