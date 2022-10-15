@@ -5,5 +5,5 @@ build-type: Simple
 
 executable xmonad
   main-is: xmonad.hs
-  build-depends: base, containers, xmonad, xmonad-contrib, xmonad-extras, xmonad-wallpaper
+  build-depends: base, containers, xmonad, xmonad-contrib, xmonad-extras
   ghc-options: -Wall -fno-warn-missing-signatures

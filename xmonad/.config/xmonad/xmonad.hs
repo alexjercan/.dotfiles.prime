@@ -69,11 +69,11 @@ import           XMonad.Util.EZConfig                (additionalKeysP)
 import           XMonad.Util.Run                     (spawnPipe)
 import           XMonad.Util.SpawnOnce
 import           XMonad.Util.Cursor
-import           XMonad.Wallpaper
+-- import           XMonad.Wallpaper
 import XMonad.Layout.NoBorders (smartBorders)
 
 myBrowser :: String
-myBrowser = "brave"
+myBrowser = "brave-browser"
 
 myFileExplorer :: String
 myFileExplorer = "nautilus"
@@ -97,7 +97,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask       -- Sets modkey to super/windows key
 
 myTerminal :: String
-myTerminal = "alacritty"   -- Sets default terminal
+myTerminal = "kitty"   -- Sets default terminal
 
 myBorderWidth :: Dimension
 myBorderWidth = 2         -- Sets border width for windows
@@ -355,7 +355,7 @@ myKeys =
 
 main :: IO ()
 main = do
-    setRandomWallpaper ["$HOME/Pictures/Wallpapers"]
+    -- setRandomWallpaper ["$HOME/Pictures/Wallpapers"]
     xmproc0 <- spawnPipe "xmobar -x 0 /home/alex/.config/xmobar/xmobarrc0"
     xmproc1 <- spawnPipe "xmobar -x 1 /home/alex/.config/xmobar/xmobarrc0"
     xmonad $ ewmh desktopConfig
