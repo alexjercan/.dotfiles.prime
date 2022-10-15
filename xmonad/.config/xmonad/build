@@ -6,6 +6,9 @@ SRC_DIR=
 
 # Where will be the executable placed
 INSTALL_DIR="$HOME/.cabal/bin"
+
+# ghcup-env
+. "$HOME/.ghcup/env" 
 ##############################################################################
 
 # config
