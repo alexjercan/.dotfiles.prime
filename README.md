@@ -38,6 +38,8 @@ cabal install --package-env=$HOME/.config/xmonad
 
 Note: I couldn't get xmonad-wallpaper to install so I can use `setRandomWallpaper`
 
+Note: To install lux on ubuntu check [lux](https://github.com/Ventto/lux)
+
 4. Install xmobar and dependencies
 
 ```console
