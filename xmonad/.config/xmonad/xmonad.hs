@@ -76,13 +76,7 @@ myBrowser :: String
 myBrowser = "brave-browser"
 
 myFileExplorer :: String
-myFileExplorer = "nautilus"
-
-myWhatsapp :: String
-myWhatsapp = myBrowser ++ " --new-tab https://web.whatsapp.com/"
-
-myNetflix:: String
-myNetflix = myBrowser ++ " --new-tab https://www.netflix.com/"
+myFileExplorer = "thunar"
 
 myScreenshoter :: String
 myScreenshoter = "scrot -e 'mv $f ~/Pictures/Screenshots/'"
