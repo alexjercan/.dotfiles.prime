@@ -28,7 +28,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 5. Install xmonad and dependencies
 
 ```console
-sudo apt install git libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev libasound2-dev
+sudo apt install git libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev libasound2-dev alsa pavucontrol blueman
 cd .config/xmonad
 cabal update
 cabal install --package-env=$HOME/.config/xmonad
@@ -75,4 +75,13 @@ exec xmonad
 startx
 ```
 
-10. Install neovim
+10. Install neovim (latest)
+
+```console
+sudo add-apt-repository ppa:neovim-ppa/unstable
+sudo apt update
+```
+
+Install packer [packer](https://github.com/wbthomason/packer.nvim)
+
+Open neovim and run `:PackerSync`

@@ -144,11 +144,12 @@ nonEmptyWS = WSIs (return (\ws -> not (null (W.integrate' $ W.stack ws))))
 
 myStartupHook :: X ()
 myStartupHook = do
-          spawnOnce "picom"
+          spawnOnce "picom &"
+          spawnOnce "nitrogen --random --restore &"
           setDefaultCursor xC_left_ptr
-          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 255 --height 22"
-          spawnOnce "nm-applet"
-          spawnOnce "blueman-applent"
+          spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 255 --height 22 &"
+          spawnOnce "nm-applet &"
+          spawnOnce "blueman-applet &"
 
 myXPConfig :: XPConfig
 myXPConfig = def
