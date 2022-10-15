@@ -14,6 +14,7 @@ cd .dotfiles
 
 ```console
 sudo apt install zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 ```
 
 3. Install ghcup and dependencies
