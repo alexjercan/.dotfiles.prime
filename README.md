@@ -1,5 +1,10 @@
 # Install Ubuntu
 
+1. Can Install all dependencies with
+
+```console
+xargs sudo apt install -y < packages.txt
+```
 
 1. Install stow and dotfiles
 
