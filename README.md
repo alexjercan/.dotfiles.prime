@@ -37,8 +37,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```console
 sudo apt install git libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev libasound2-dev alsa-tools pavucontrol blueman nitrogen picom trayer xdotool
 cd .config/xmonad
-cabal update
-cabal install --package-env=$HOME/.config/xmonad
+stack install
 ```
 
 Note: I couldn't get xmonad-wallpaper to install so I can use `setRandomWallpaper`

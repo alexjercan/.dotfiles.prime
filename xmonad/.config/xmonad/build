@@ -8,7 +8,7 @@ SRC_DIR=
 INSTALL_DIR="$HOME/.cabal/bin"
 
 # ghcup-env
-. "$HOME/.ghcup/env" 
+. "$HOME/.ghcup/env"
 ##############################################################################
 
 # config
@@ -31,10 +31,6 @@ fi
 
 cd "$SRC_DIR"
 
-cabal install my-xmonad:xmonad \
-    --enable-executable-stripping \
-    --enable-optimization=2 \
-    --installdir="$INSTALL_DIR" \
-    --overwrite-policy=always
+stack install
 
 ln -sf "$INSTALL_DIR/xmonad" "$output"

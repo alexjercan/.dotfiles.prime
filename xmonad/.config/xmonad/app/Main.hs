@@ -1,3 +1,5 @@
+module Main (main) where
+
   -- Base
 import           System.Exit
 import           System.IO                           (hPutStrLn)
@@ -351,8 +353,8 @@ myKeys =
 main :: IO ()
 main = do
     -- setRandomWallpaper ["$HOME/Pictures/Wallpapers"]
-    xmproc0 <- spawnPipe "xmobar -x 0 /home/alex/.config/xmobar/xmobarrc0"
-    xmproc1 <- spawnPipe "xmobar -x 1 /home/alex/.config/xmobar/xmobarrc0"
+    xmproc0 <- spawnPipe "xmobar -x 0"
+    xmproc1 <- spawnPipe "xmobar -x 1"
     xmonad $ ewmh desktopConfig
         { manageHook = (isFullscreen --> doFullFloat) <+>  myManageHook <+> manageDocks
         , handleEventHook    = fullscreenEventHook
@@ -378,4 +380,5 @@ main = do
                         , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
                         }
         } `additionalKeysP` myKeys
+
 
