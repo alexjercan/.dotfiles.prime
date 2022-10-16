@@ -24,7 +24,9 @@ import           Data.Monoid
 import           XMonad.Config.Desktop
 import           XMonad.Hooks.DynamicLog             (PP (..), dynamicLogWithPP,
                                                       shorten, wrap,
-                                                      xmobarColor, xmobarPP)
+                                                      xmobarColor, xmobarPP,
+                                                      dynamicLogString,
+                                                      xmonadPropLog)
 import           XMonad.Hooks.EwmhDesktops
 import           XMonad.Hooks.FadeInactive
 import           XMonad.Hooks.ManageDocks            (ToggleStruts (..),
@@ -352,9 +354,6 @@ myKeys =
 
 main :: IO ()
 main = do
-    -- setRandomWallpaper ["$HOME/Pictures/Wallpapers"]
-    xmproc0 <- spawnPipe "xmobar -x 0"
-    xmproc1 <- spawnPipe "xmobar -x 1"
     xmonad $ ewmh desktopConfig
         { manageHook = (isFullscreen --> doFullFloat) <+>  myManageHook <+> manageDocks
         , handleEventHook    = fullscreenEventHook
@@ -370,15 +369,14 @@ main = do
         , borderWidth        = myBorderWidth
         , normalBorderColor  = myNormColor
         , focusedBorderColor = myFocusColor
-        , logHook = workspaceHistoryHook <+> myLogHook <+> dynamicLogWithPP xmobarPP
-                        { ppOutput = \x -> hPutStrLn xmproc0 x >> hPutStrLn xmproc1 x
-                        , ppCurrent = xmobarColor myBrightCyan "" . wrap "[" "]" -- Current workspace in xmobar
-                        , ppHidden = xmobarColor myDimCyan "" . wrap "*" ""
-                        , ppHiddenNoWindows = xmobarColor myDimWhite ""        -- Hidden workspaces (no windows)
-                        , ppTitle = xmobarColor myDimWhite "" . shorten 60     -- Title of active window in xmobar
-                        , ppExtras  = [windowCount]                           -- # of windows current workspace
-                        , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
-                        }
+        , logHook = dynamicLogString xmobarPP
+                         { ppCurrent = xmobarColor myBrightCyan "" . wrap "[" "]"
+                         , ppHidden = xmobarColor myDimCyan "" . wrap "*" ""
+                         , ppHiddenNoWindows = xmobarColor myDimWhite ""
+                         , ppTitle = xmobarColor myDimWhite "" . shorten 60
+                         , ppExtras  = [windowCount]
+                         , ppOrder  = \(ws:l:t:ex) -> [ws,l]++ex++[t]
+                         } >>= xmonadPropLog
         } `additionalKeysP` myKeys
 
 

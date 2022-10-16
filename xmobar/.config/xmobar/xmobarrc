@@ -14,7 +14,7 @@ Config
     , persistent = True
     , iconRoot = ".config/xmobar/icons"
     , commands =
-        [ Run UnsafeStdinReader
+        [ Run UnsafeXMonadLog
         , Run Battery
              [ "--template"  , "<leftipat> <acstatus>"
              , "--Low"       , "36"      -- units: %
@@ -123,6 +123,6 @@ Config
     -- layout
     , sepChar = "%"
     , alignSep = "}{"
-    , template = "%haskell% %pipe% %UnsafeStdinReader% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %disku% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %pipe% %alsa:default:Master% %pipe% %trayerpad%"
+    , template = "%haskell% %pipe% %UnsafeXMonadLog% %pipe% } %date% { %pipe% %uname% %pipe% %cpu% %pipe% %memory% %pipe% %disku% %pipe% %dynnetwork% %pipe% %LROP% %pipe% %battery% %pipe% %alsa:default:Master% %pipe% %trayerpad%"
   }
 
