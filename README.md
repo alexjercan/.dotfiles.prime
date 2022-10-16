@@ -53,7 +53,7 @@ cabal install xmobar --flags="all_extensions"
 sudo apt install kitty
 ```
 
-6. Install brave-browser [brave.com](https://brave.com/linux/)
+6. Install brave-browser [brave.com](https://brave.com/linux/) or any other browser
 
 ```console
 sudo apt install apt-transport-https curl
