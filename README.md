@@ -1,77 +1,53 @@
-# Install Ubuntu
+# My Dotfiles
 
-1. Can Install all dependencies with
+This repository contains my dotfiles.
+
+## Install (Ubuntu/Debian)
+
+1. First install all the dependencies needed throughout the installer.
 
 ```console
-xargs sudo apt install -y < packages.txt
+sudo apt install curl
+curl https://raw.githubusercontent.com/alexjercan/.dotfiles/master/packages.txt | xargs sudo apt install -y
 ```
 
-1. Install stow and dotfiles
+1. Clone the repository and install the dotfiles
 
 ```console
-sudo apt install stow git zsh curl
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-
 cd
 git clone https://github.com/alexjercan/.dotfiles.git
 cd .dotfiles
 ./ubuntu
 ```
 
-For auto suggestions
-```console
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-```
-
-2. Install ghcup and dependencies
+2. Install ghcup
 
 Note: Choose default settings for ghcup
 
 ```console
-sudo apt install build-essential curl libffi-dev libffi8ubuntu1 libgmp-dev libgmp10 libncurses-dev libncurses5 libtinfo5
 curl --proto '=https' --tlsv1.2 -sSf https://get-ghcup.haskell.org | sh
 ```
 
-3. Install xmonad and dependencies
+3. Install xmonad
 
 ```console
-sudo apt install git libx11-dev libxft-dev libxinerama-dev libxrandr-dev libxss-dev libasound2-dev alsa-tools pavucontrol blueman nitrogen picom trayer xdotool
 cd .config/xmonad
 stack install
 ```
 
-Note: I couldn't get xmonad-wallpaper to install so I can use `setRandomWallpaper`
+Stack will install xmonad in `$HOME/.local/bin` which might need to be added to the PATH.
 
-Note: To install lux on ubuntu check [lux](https://github.com/Ventto/lux)
-
-4. Install xmobar and dependencies
-
-```console
-sudo apt install libxpm-dev
-cabal install xmobar --flags="all_extensions"
-```
-
-5. Install kitty or any terminal emulator and set xmonad terminal to that
+4. Install a terminal emulator and set it to default in xmonad config to use it. I wanted to try kitty out.
 
 ```console
 sudo apt install kitty
 ```
 
-6. Install brave-browser [brave.com](https://brave.com/linux/) or any other browser
+5. At this point you can use xmonad and install a browser and any other tools.
 
-```console
-sudo apt install apt-transport-https curl
+Note: Super+Enter starts the terminal
 
-sudo curl -fsSLo /usr/share/keyrings/brave-browser-archive-keyring.gpg https://brave-browser-apt-release.s3.brave.com/brave-browser-archive-keyring.gpg
-
-echo "deb [signed-by=/usr/share/keyrings/brave-browser-archive-keyring.gpg arch=amd64] https://brave-browser-apt-release.s3.brave.com/ stable main"|sudo tee /etc/apt/sources.list.d/brave-browser-release.list
-
-sudo apt update
-
-sudo apt install brave-browser
-```
-
-7. Install xinit and prepare the ~/.xsession file and startx
+Note: You can use `.xsession` to start xmonad with `startx`
 
 ```console
 sudo apt install xinit
@@ -87,8 +63,8 @@ exec xmonad
 startx
 ```
 
-Note:
-The other option would be to use a display manager and add the following into /usr/share/xsessions/xmonad.desktop
+Note: The other option would be to use a display manager and add the following into /usr/share/xsessions/xmonad.desktop
+Or use default.desktop with the modified `.xsession`
 
 ```
 [Desktop Entry]
@@ -100,7 +76,24 @@ Icon=
 Type=Application
 ```
 
-8. Install neovim (latest)
+Note: I couldn't get xmonad-wallpaper to install so I can use `setRandomWallpaper`. TODO: Check the repo and try to bump the versions somehow
+
+Note: To install lux on ubuntu check [lux](https://github.com/Ventto/lux)
+
+Note: For oh my zsh check [omz](https://github.com/ohmyzsh/ohmyzsh)
+
+Note: For auto suggestions check [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions)
+
+Note: Install xmobar and dependencies
+
+```console
+sudo apt install libxpm-dev
+cabal install xmobar --flags="all_extensions"
+```
+
+Note: Install brave-browser [brave.com](https://brave.com/linux/) or any other browser
+
+Note: Install neovim (latest)
 
 ```console
 sudo add-apt-repository ppa:neovim-ppa/unstable

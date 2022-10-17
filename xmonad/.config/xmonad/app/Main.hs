@@ -142,9 +142,9 @@ nonEmptyWS = WSIs (return (\ws -> not (null (W.integrate' $ W.stack ws))))
 
 myStartupHook :: X ()
 myStartupHook = do
+          setDefaultCursor xC_left_ptr
           spawnOnce "picom &"
           spawnOnce "nitrogen --random --restore &"
-          setDefaultCursor xC_left_ptr
           spawnOnce "trayer --edge top --align right --widthtype request --padding 6 --SetDockType true --SetPartialStrut true --expand true --monitor 0 --transparent true --alpha 255 --height 22 &"
           spawnOnce "nm-applet &"
           spawnOnce "blueman-applet &"
@@ -352,8 +352,9 @@ myKeys =
         ++ [("M-S-p " ++ k, f myXPConfig) | (k,f) <- promptList ]
           where nonNSP = WSIs (return (\ws -> W.tag ws /= "nsp"))
 
-main :: IO ()
+main:: IO ()
 main = do
+    _ <- spawnPipe "xmobar"
     xmonad $ ewmh desktopConfig
         { manageHook = (isFullscreen --> doFullFloat) <+>  myManageHook <+> manageDocks
         , handleEventHook    = fullscreenEventHook
