@@ -96,6 +96,7 @@ Note: Install brave-browser [brave.com](https://brave.com/linux/) or any other b
 Note: Install neovim (latest)
 
 ```console
+sudo apt install software-properties-common
 sudo add-apt-repository ppa:neovim-ppa/unstable
 sudo apt update
 ```
