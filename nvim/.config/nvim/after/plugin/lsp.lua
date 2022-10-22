@@ -2,10 +2,6 @@ local Remap = require("theprimeagen.keymap")
 local nnoremap = Remap.nnoremap
 local inoremap = Remap.inoremap
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities.textDocument.completion.completionItem.snippetSupport = true
-
--- Setup nvim-cmp.
 local cmp = require("cmp")
 local source_mapping = {
 	buffer = "[Buffer]",
@@ -22,12 +18,13 @@ cmp.setup({
 			require("luasnip").lsp_expand(args.body)
 		end,
 	},
+
 	mapping = cmp.mapping.preset.insert({
         ['<C-u>'] = cmp.mapping.scroll_docs(-4),
         ['<C-d>'] = cmp.mapping.scroll_docs(4),
         ['<C-Space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
-        ['<CR>'] = cmp.mapping.confirm({ select = false }),
+        ['<CR>'] = cmp.mapping.confirm({ select = true }),
 	}),
 
 	formatting = {
@@ -50,6 +47,7 @@ cmp.setup({
 		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
 		{ name = "buffer" },
+        { name = "path" },
 	},
 })
 
@@ -62,27 +60,54 @@ tabnine:setup({
 	snippet_placeholder = "..",
 })
 
-local function config(_config)
-	return vim.tbl_deep_extend("force", {
-		capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
-		on_attach = function()
-			nnoremap("<leader>vd", function() vim.lsp.buf.definition() end)
-			nnoremap("<leader>vh", function() vim.lsp.buf.hover() end)
-			nnoremap("<leader>vw", function() vim.lsp.buf.workspace_symbol() end)
-			nnoremap("<leader>ve", function() vim.diagnostic.open_float() end)
-			nnoremap("<leader>vn", function() vim.diagnostic.goto_next() end)
-			nnoremap("<leader>vp", function() vim.diagnostic.goto_prev() end)
-			nnoremap("<leader>va", function() vim.lsp.buf.code_action() end)
-			nnoremap("<leader>vr", function() vim.lsp.buf.references() end)
-			nnoremap("<leader>vm", function() vim.lsp.buf.rename() end)
-			nnoremap("<leader>vs", function() vim.lsp.buf.signature_help() end)
-			nnoremap("<leader>vc", function()
-                vim.lsp.codelens.refresh()
-                vim.lsp.codelens.run()
-            end)
-		end,
-	}, _config or {})
+local function on_attach()
+    nnoremap("<leader>vd", function() vim.lsp.buf.definition() end)
+    nnoremap("<leader>vh", function() vim.lsp.buf.hover() end)
+    nnoremap("<leader>vw", function() vim.lsp.buf.workspace_symbol() end)
+    nnoremap("<leader>ve", function() vim.diagnostic.open_float() end)
+    nnoremap("<leader>vn", function() vim.diagnostic.goto_next() end)
+    nnoremap("<leader>vp", function() vim.diagnostic.goto_prev() end)
+    nnoremap("<leader>va", function() vim.lsp.buf.code_action() end)
+    nnoremap("<leader>vr", function() vim.lsp.buf.references() end)
+    nnoremap("<leader>vm", function() vim.lsp.buf.rename() end)
+    nnoremap("<leader>vs", function() vim.lsp.buf.signature_help() end)
+    nnoremap("<leader>vc", function()
+        vim.lsp.codelens.refresh()
+        vim.lsp.codelens.run()
+    end)
 end
+
+local lsp_flags = {
+  debounce_text_changes = 150,
+}
+
+require('lspconfig').jedi_language_server.setup({
+    on_attach=on_attach,
+    flags = lsp_flags,
+})
+
+require('lspconfig').hls.setup({
+    on_attach=on_attach,
+    flags = lsp_flags,
+	root_dir = function() return vim.loop.cwd() end
+})
+
+require('lspconfig').tsserver.setup({
+    on_attach=on_attach,
+    flags = lsp_flags,
+	root_dir = function() return vim.loop.cwd() end
+})
+
+require('lspconfig').clangd.setup({
+	cmd = {
+			"clangd-12",
+			"--background-index",
+			"--suggest-missing-includes",
+	},
+    on_attach=on_attach,
+    flags = lsp_flags,
+	root_dir = function() return vim.loop.cwd() end
+})
 
 local snippets_paths = function()
 	local plugins = { "friendly-snippets" }
@@ -104,26 +129,3 @@ require("luasnip.loaders.from_vscode").lazy_load({
 	exclude = {},
 })
 
-require('lspconfig').jedi_language_server.setup({
-	config(),
-})
-
-require('lspconfig').hls.setup({
-	config(),
-	root_dir = function() return vim.loop.cwd() end
-})
-
-require('lspconfig').tsserver.setup({
-	config(),
-	root_dir = function() return vim.loop.cwd() end
-})
-
-require('lspconfig').clangd.setup({
-	cmd = {
-			"clangd-12",
-			"--background-index",
-			"--suggest-missing-includes",
-	},
-	config(),
-	root_dir = function() return vim.loop.cwd() end
-})

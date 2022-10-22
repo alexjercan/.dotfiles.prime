@@ -24,15 +24,15 @@ return require('packer').startup(function(use)
     use("onsails/lspkind-nvim")
     use("L3MON4D3/LuaSnip")
     use("saadparwaiz1/cmp_luasnip")
-
-    -- Primeagen doesn"t create lodash
-    use("ThePrimeagen/harpoon")
+    use("kylechui/nvim-surround")
 
     use("mbbill/undotree")
 
     -- Colorscheme section
     use("gruvbox-community/gruvbox")
     use("folke/tokyonight.nvim")
+    use({"catppuccin/nvim", as = "catppuccin" })
+    use({"rose-pine/neovim", as = "rose-pine" })
 
     -- Treeshitter
     use("nvim-treesitter/nvim-treesitter", {
