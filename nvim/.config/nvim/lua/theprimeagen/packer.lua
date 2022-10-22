@@ -1,14 +1,13 @@
--- This file can be loaded by calling `lua require('plugins')` from your init.vim
-
--- Only required if you have packer configured as `opt`
 vim.cmd [[packadd packer.nvim]]
 
-return require('packer').startup(function(use)
+return require("packer").startup(function(use)
     -- Packer can manage itself
-    use 'wbthomason/packer.nvim'
+    use "wbthomason/packer.nvim"
 
     -- Simple plugins can be specified as strings
     use("TimUntersberger/neogit")
+    use("kylechui/nvim-surround")
+    use("mbbill/undotree")
 
     -- TJ created lodash of neovim
     use("nvim-lua/plenary.nvim")
@@ -17,16 +16,22 @@ return require('packer').startup(function(use)
 
     -- All the things
     use("neovim/nvim-lspconfig")
+
+    -- cmp
+    use("hrsh7th/nvim-cmp")
+    use("onsails/lspkind-nvim")
+
     use("hrsh7th/cmp-nvim-lsp")
     use("hrsh7th/cmp-buffer")
-    use("hrsh7th/nvim-cmp")
     use("tzachar/cmp-tabnine", { run = "./install.sh" })
-    use("onsails/lspkind-nvim")
-    use("L3MON4D3/LuaSnip")
     use("saadparwaiz1/cmp_luasnip")
-    use("kylechui/nvim-surround")
+    use("hrsh7th/cmp-calc")
+    use("hrsh7th/cmp-path")
+    use("uga-rosa/cmp-dictionary")
 
-    use("mbbill/undotree")
+    -- snip
+    use("L3MON4D3/LuaSnip")
+    use("honza/vim-snippets")
 
     -- Colorscheme section
     use("gruvbox-community/gruvbox")
@@ -38,7 +43,6 @@ return require('packer').startup(function(use)
     use("nvim-treesitter/nvim-treesitter", {
         run = ":TSUpdate"
     })
-
     use("nvim-treesitter/playground")
     use("romgrk/nvim-treesitter-context")
 end)
