@@ -52,7 +52,7 @@ cmp.setup({
         ["<C-d>"] = cmp.mapping.scroll_docs(4),
         ["<C-Space>"] = cmp.mapping.complete(),
         ["<C-e>"] = cmp.mapping.close(),
-        ["<CR>"] = cmp.mapping.confirm({ select = true }),
+        ["<CR>"] = cmp.mapping.confirm({ select = false }),
 	}),
 
 	formatting = {
@@ -73,12 +73,12 @@ cmp.setup({
 	},
 
 	sources = {
-		{ name = "nvim_lsp" },
-		{ name = "buffer" },
 		{ name = "cmp_tabnine" },
+		{ name = "nvim_lsp" },
 		{ name = "luasnip" },
         { name = "calc" },
         { name = "path" },
+		{ name = "buffer" },
         { name = "dictionary" },
 	},
 })
