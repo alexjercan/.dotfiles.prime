@@ -1,13 +1,27 @@
-vim.g.theprimeagen_colorscheme = "tokyonight"
+function ColorMyPencils(colorscheme)
+    require("transparent").setup({
+      enable = true, -- boolean: enable transparent
+      extra_groups = { -- table/string: additional groups that should be cleared
+        -- In particular, when you set it to 'all', that means all available groups
 
-function ColorMyPencils()
+        -- example of akinsho/nvim-bufferline.lua
+        "BufferLineTabClose",
+        "BufferlineBufferSelected",
+        "BufferLineFill",
+        "BufferLineBackground",
+        "BufferLineSeparator",
+        "BufferLineIndicatorSelected",
+      },
+      exclude = {}, -- table: groups you don't want to clear
+    })
+
     vim.g.gruvbox_contrast_dark = 'hard'
-    vim.g.tokyonight_transparent_sidebar = true
-    vim.g.tokyonight_transparent = true
+    vim.g.tokyonight_transparent_sidebar = vim.g.transparent_enabled
+    vim.g.tokyonight_transparent = vim.g.transparent_enabled
     vim.g.gruvbox_invert_selection = '0'
     vim.opt.background = "dark"
 
-    vim.cmd("colorscheme " .. vim.g.theprimeagen_colorscheme)
+    vim.cmd("colorscheme " .. colorscheme)
 
     local hl = function(thing, opts)
         vim.api.nvim_set_hl(0, thing, opts)
@@ -26,10 +40,6 @@ function ColorMyPencils()
         bg = "None"
     })
 
-    hl("Normal", {
-        bg = "none"
-    })
-
     hl("LineNr", {
         fg = "#5eacd3"
     })
@@ -37,8 +47,7 @@ function ColorMyPencils()
     hl("netrwDir", {
         fg = "#5eacd3"
     })
-
 end
 
-ColorMyPencils()
+ColorMyPencils("tokyonight")
 

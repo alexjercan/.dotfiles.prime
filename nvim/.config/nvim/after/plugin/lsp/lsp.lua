@@ -50,3 +50,9 @@ require('lspconfig').clangd.setup({
     flags = lsp_flags,
 	root_dir = vim.loop.cwd,
 })
+
+require('lspconfig').rust_analyzer.setup({
+	cmd = { "rustup", "run", "nightly", "rust-analyzer" },
+    on_attach = on_attach,
+    flags = lsp_flags,
+})
