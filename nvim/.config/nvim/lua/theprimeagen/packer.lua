@@ -1,50 +1,58 @@
-vim.cmd [[packadd packer.nvim]]
+-- This file can be loaded by calling `lua require('plugins')` from your init.vim
 
-return require("packer").startup(function(use)
-    -- Packer can manage itself
-    use "wbthomason/packer.nvim"
+-- Only required if you have packer configured as `opt`
+vim.cmd.packadd('packer.nvim')
 
-    -- Simple plugins can be specified as strings
-    use("TimUntersberger/neogit")
-    use("kylechui/nvim-surround")
-    use("mbbill/undotree")
+return require('packer').startup(function(use)
+  -- Packer can manage itself
+  use 'wbthomason/packer.nvim'
 
-    -- TJ created lodash of neovim
-    use("nvim-lua/plenary.nvim")
-    use("nvim-lua/popup.nvim")
-    use("nvim-telescope/telescope.nvim")
+  use {
+	  'nvim-telescope/telescope.nvim', tag = '0.1.0',
+	  -- or                            , branch = '0.1.x',
+	  requires = { {'nvim-lua/plenary.nvim'} }
+  }
 
-    -- All the things
-    use("neovim/nvim-lspconfig")
+  use({
+	  'rose-pine/neovim',
+	  as = 'rose-pine',
+	  config = function()
+		  vim.cmd('colorscheme rose-pine')
+	  end
+  })
 
-    -- cmp
-    use("hrsh7th/nvim-cmp")
-    use("onsails/lspkind-nvim")
+  use({'nvim-treesitter/nvim-treesitter', run = ':TSUpdate'})
+  use('nvim-treesitter/playground')
+  use('romgrk/nvim-treesitter-context')
+  use('theprimeagen/harpoon')
+  use('mbbill/undotree')
+  use('tpope/vim-fugitive')
+  use('kylechui/nvim-surround')
 
-    use("hrsh7th/cmp-nvim-lsp")
-    use("hrsh7th/cmp-buffer")
-    use("tzachar/cmp-tabnine", { run = "./install.sh" })
-    use("saadparwaiz1/cmp_luasnip")
-    use("hrsh7th/cmp-calc")
-    use("hrsh7th/cmp-path")
-    use("uga-rosa/cmp-dictionary")
+  use {
+	  'VonHeikemen/lsp-zero.nvim',
+	  requires = {
+		  -- LSP Support
+		  {'neovim/nvim-lspconfig'},
+		  {'williamboman/mason.nvim'},
+		  {'williamboman/mason-lspconfig.nvim'},
 
-    -- snip
-    use("L3MON4D3/LuaSnip")
-    use("honza/vim-snippets")
+		  -- Autocompletion
+		  {'hrsh7th/nvim-cmp'},
+		  {'hrsh7th/cmp-buffer'},
+		  {'hrsh7th/cmp-path'},
+		  {'saadparwaiz1/cmp_luasnip'},
+		  {'hrsh7th/cmp-nvim-lsp'},
+		  {'hrsh7th/cmp-nvim-lua'},
 
-    -- Colorscheme section
-    use("gruvbox-community/gruvbox")
-    use("folke/tokyonight.nvim")
-    use({"catppuccin/nvim", as = "catppuccin" })
-    use({"rose-pine/neovim", as = "rose-pine" })
+		  -- Snippets
+		  {'L3MON4D3/LuaSnip'},
+		  {'rafamadriz/friendly-snippets'},
+	  }
+  }
 
-    use({"xiyaowong/nvim-transparent"})
+  use('folke/zen-mode.nvim')
+  use('github/copilot.vim')
 
-    -- Treeshitter
-    use("nvim-treesitter/nvim-treesitter", {
-        run = ":TSUpdate"
-    })
-    use("nvim-treesitter/playground")
-    use("romgrk/nvim-treesitter-context")
 end)
+
