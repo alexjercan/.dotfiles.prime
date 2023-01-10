@@ -275,6 +275,7 @@ myManageHook = composeAll
             , className =? "Pavucontrol" --> doCenterFloat
             , className =? "Org.gnome.Weather" --> doCenterFloat
             , className =? "Gnome-calendar" --> doCenterFloat
+            , className =? "Blueman-manager" --> doCenterFloat
             ]
 
 myLogHook :: X ()
