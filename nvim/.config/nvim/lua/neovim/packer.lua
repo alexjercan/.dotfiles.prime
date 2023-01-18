@@ -55,7 +55,12 @@ return require('packer').startup(function(use)
   use('github/copilot.vim')
 
   -- my shit
-  use('alexjercan/codehint')
+  use({
+    'alexjercan/codehint',
+    requires = {
+      {'nvim-treesitter/nvim-treesitter'}
+    }
+  })
 
 end)
 
