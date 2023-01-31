@@ -54,6 +54,11 @@ return require('packer').startup(function(use)
   use('folke/zen-mode.nvim')
   use('github/copilot.vim')
 
+  use {
+    "folke/trouble.nvim",
+    requires = "nvim-tree/nvim-web-devicons",
+  }
+
   -- my shit
   use({
     'alexjercan/codehint',
