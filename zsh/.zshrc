@@ -89,3 +89,7 @@ export SSH_KEY_PATH="~/.ssh/rsa_id"
 
 source $HOME/.zsh_profile
 [ -f "/home/alex/.ghcup/env" ] && source "/home/alex/.ghcup/env" # ghcup-env
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
